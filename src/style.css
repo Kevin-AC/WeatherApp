@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap');
+@tailwind base;
+@tailwind components;
+    .textTemp{
+        @apply text-textWhite text-7xl font-medium text-transparent bg-gradient-to-b from-textWhite to-textWhite2  bg-clip-text
+    }
+    .inputAbsolute{
+        @apply xl:absolute top-10 right-0 left-0 m-auto
+    }
+    .app{
+        @apply sm:w-96 xl:w-screen h-auto pb-4 bg-Day rounded-b-[60px] relative  xl:h-screen xl:rounded-none grid place-content-center
+    }
+    .days{
+        @apply w-[70px] h-28 p-2 mt-8 flex flex-col justify-center items-center gap-2 bg-Day rounded-2xl text-textWhite text-sm text-center 
+    }
+@tailwind utilities;
+
+body{
+   
+    font-family: 'Rubik', sans-serif;
+}
