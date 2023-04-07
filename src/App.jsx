@@ -34,7 +34,7 @@ function App () {
       }
     }
     fetchData()
-  }, [searchValue])
+  }, [searchValue])// update status on search
   // Determine if it's day or night
   const isDay = data?.current?.is_day
   const ruteIcon = isDay ? 'day' : 'night'
@@ -47,17 +47,32 @@ function App () {
     return icon?.split('/').pop().slice(0, -4)
   })
 
-  // console.log(searchValue)
-
   const items = data?.forecast?.forecastday
-
+  const condition = data?.current?.condition?.text
+  // console.log(condition)
   const timezone = data?.location?.tz_id
   const localTime = new Date().toLocaleString('en-US', { timeZone: timezone })
 
   return (
     <main className='w-screen grid place-items-center'>
-      <section className={`app ${ruteIcon === 'night' ? 'bg-Night' : ''}`}>
-        <img className='hidden xl:block absolute right-16 top-5 w-64' src='/icons/day/113.svg' alt='sunIcon' />
+      <section className={`app ${condition === 'Clear' || ruteIcon === 'night'
+          ? 'bg-Night'
+        : condition === 'Heavy rain'
+          ? 'bg-Cloudy'
+        : condition === 'Light snow'
+          ? 'bg-Snowy'
+        : condition === 'Sunny' || ruteIcon === 'day' ? 'bg-Day' : 'bg-Night'}`}
+      >
+        <img
+          className='hidden xl:block absolute right-16 top-5 w-64'
+          src={`/icons/${ruteIcon}/${condition && condition === 'Clear'
+                  ? '113.png'
+          : condition && condition === 'Light snow'
+                  ? '326.png'
+          : condition && condition === 'Thundery outbreaks possible' ? '200.png' : '113.png'
+
+      }`} alt='sunIcon'
+        />
         <div className='w-screen xl:max-w-5xl  xl:p-7 xl:h-96 xl:flex xl:flex-col xl:rounded-[60px] xl:justify-center xl:bg-gradient-to-l from-bg1 to-bg2'>
           <Card
             name={data?.location?.name}
@@ -65,7 +80,7 @@ function App () {
             icon={currentIconNumber}
             country={data?.location?.country}
             temp={data?.current?.temp_c}
-            condition={data?.current?.condition?.text}
+            condition={condition}
             timeZone={timezone}
             date={formatDate(localTime)}
             onButtonClick={handleSearch}
@@ -94,7 +109,3 @@ function App () {
   )
 }
 export default App
-
-// si  "is_day":0, es de doche
-// si  "is_day":1 es de dia
-// hacer condicional para cambio de tema
