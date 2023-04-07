@@ -3,7 +3,8 @@ import React, { useState } from 'react'
 function Card ({ name, temp, condition, timeZone, date, country, dayNight, icon, onButtonClick }) {
   const [inputValue, setInputValue] = useState('')
   const handleClick = () => {
-    onButtonClick(inputValue)
+    const clearText = inputValue.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
+    onButtonClick(clearText)
   }
   const handleInputChange = (event) => {
     setInputValue(event.target.value)
@@ -28,7 +29,7 @@ function Card ({ name, temp, condition, timeZone, date, country, dayNight, icon,
             type='submit'
             className='absolute top-0 bottom-0 m-auto right-2'
           >
-            <img src='/icons/search.png' alt='search' />
+            <img src='/icons/other/search.png' alt='search' />
           </button>
         </form>
       </div>
